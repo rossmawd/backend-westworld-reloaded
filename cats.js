@@ -6,6 +6,8 @@ module.exports = function(app) {
 
   // Create
   app.post("/cat", (req, res) => {
+
+    console.log(req.body)
     _cats.push(req.body);
     res.json({ info: "cat created successfully" });
   });
