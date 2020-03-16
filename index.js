@@ -1,36 +1,50 @@
-const express = require("express");
-const app = express();
+var express = require("express");
+var app = express();
+var bodyParser = require('body-parser')
 
-process.env['PORT'] = 5000 //couldn't figure out how cmd line env setting works
 
-//first arg is the path, second is the callback to execute on hitting that endpoint
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({
+    extended:true
+}))
+
+
+var cats = require('./cats.js')(app)  //passing the app to cats
+
+const port = process.env.PORT || 3000;
 app.get("/", (req, res) => {
-   //bunch of properties available to analyse the nature of the request 
-   res.send('hello world')
+  //bunch of properties available to analyse the nature of the request
+  // res.send('hello world')
+  res.json({ me: "hello", you: "goodbye" });
 });
 
+app.listen(port, () => console.log(`listening on port ${port}`));
 
-app.get('/api/courses/:id', (req, res) => {
-  res.send(req.params.id);
-})
 
-app.get('/api/courses', (req, res) => {
-    res.send([1,2,3,4])
-})
-//nodemon index.js 
 
-//setting an env variable so that the port can be set externally
-const port = process.env.PORT || 3000;
-console.log(process.env)
 
-app.listen(port, ()=> console.log(`listening on port ${port}`))
 
-// app.get()
-// app.post()
-// app.put()
-// app.delete()
-//https://expressjs.com/en/4x/api.html#req
-    // e.g. req.body gives the body of the request
 
-//<pre>3</pre>
-    //sends it back to the client as HTML
+
+
+
+
+
+
+
+
+
+
+
+
+// STANDARD NODE
+// var http = require('http');
+
+// http.createServer(function(req,res) {
+//     res.writeHead(200, {
+//         'Content-Type': 'text/plain'
+//     });
+//     res.end('Hello World\n')
+// }).listen(3000, '127.0.0.1') //local host
+
+// console.log('server is running at http://127.0.0.1:3000/')
